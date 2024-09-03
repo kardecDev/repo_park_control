@@ -1,6 +1,5 @@
 package com.api.park_control.controllers;
 
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,15 +22,25 @@ import java.time.ZoneId;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/parking-spot")
 public class ParkingSpotController {
-
     final ParkingSpotService parkingSpotService;
-
     public ParkingSpotController(ParkingSpotService parkingSpotService) {
         this.parkingSpotService = parkingSpotService;
     }
 
     @PostMapping
     public ResponseEntity<Object> saveParkingSpot(@RequestBody @Valid ParkingSpotRecordDto parkingSpotRecordDto){
+        
+        if(parkingSpotService.existsByLicensePlateCar(parkingSpotRecordDto.licensePlateCar())){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflit: License Plate Car is already in use!");
+        }
+        if(parkingSpotService.existsByParkSpotNumber(parkingSpotRecordDto.parkSpotNumber())){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflit: Parking Spot is already in use!");
+        }
+        if(parkingSpotService.existsByApartmentAndBlock(parkingSpotRecordDto.apartment(), parkingSpotRecordDto.block())){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflit: Parking Spot is already registered for this apartment/block!");
+        }
+        
+        
         var parkingSpotModel = new ParkingSpotModel();
         BeanUtils.copyProperties(parkingSpotRecordDto, parkingSpotModel);
         parkingSpotModel.setRegistrationDate(LocalDateTime.now(ZoneId.of("UTC")));

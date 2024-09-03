@@ -31,7 +31,11 @@ public class ParkingSpotModel implements Serializable{
     private LocalDateTime registrationDate;
     @Column(nullable = false,  length=130)
     private String responsableName;
-    
+    @Column(nullable = false,  length=4)
+    private String apartment;
+    @Column(nullable = false,  length=2)
+    private String block;
+
     public static long getSerialversionuid() {
         return serialVersionUID;
     }
@@ -83,8 +87,17 @@ public class ParkingSpotModel implements Serializable{
     public void setResponsableName(String responsableName) {
         this.responsableName = responsableName;
     }
+    public String getApartment() {
+        return apartment;
+    }
+    public void setApartment(String apartment) {
+        this.apartment = apartment;
+    }
+    public String getBlock() {
+        return block;
+    }
+    public void setBlock(String block) {
+        this.block = block;
+    }
     
-
-    
-
 }
