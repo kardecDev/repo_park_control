@@ -1,5 +1,5 @@
 services:
-  apiPark:
+  apipark:
       build:
         context: .
         dockerfile: .devcontainer/Dockerfile.dev

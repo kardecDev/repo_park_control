@@ -5,7 +5,7 @@
         "docker-compose.yml"
     ],
 
-    "service": "apiPark",
+    "service": "apipark",
     "workspaceFolder": "/app",
     "customizations": {
         "vscode": {
