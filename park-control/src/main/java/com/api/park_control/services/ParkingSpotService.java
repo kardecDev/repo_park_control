@@ -1,10 +1,14 @@
 package com.api.park_control.services;
 
+import java.util.List;
+import java.util.UUID;
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 import com.api.park_control.models.ParkingSpotModel;
 import com.api.park_control.repoitories.ParkingSpotRepository;
 import jakarta.transaction.Transactional;
-import java.util.List;
+
 @Service
 public class ParkingSpotService {
     final ParkingSpotRepository parkingSpotRepository;
@@ -26,5 +30,12 @@ public class ParkingSpotService {
     }
     public List<ParkingSpotModel> findAll() {
         return parkingSpotRepository.findAll();
+    }
+    public Optional<ParkingSpotModel> findById(UUID id) {
+        return parkingSpotRepository.findById(id);
+    }
+    @Transactional
+    public void deleted(ParkingSpotModel parkingSpotModel) {
+        parkingSpotRepository.delete(parkingSpotModel);
     }
 }
